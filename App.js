@@ -55,11 +55,9 @@ export default function App() {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.contactRow}
-      onPress={() => showPhoneNumber(item)}
-      activeOpacity={0.7}
-    >
-      <View style={styles.avatar}>
-        <Text style={styles.avatarText}>{item.name[0]}</Text>
+      onPress={() => showPhoneNumber(item)}>
+      <View style={styles.profilePicture}>
+        <Text style={styles.profileText}>{item.name[0]}</Text>
       </View>
 
       <View style={styles.contactInfo}>
@@ -75,6 +73,33 @@ export default function App() {
     </View>
   );
 
+return (
+   <SafeAreaView style={styles.container}>
+     <StatusBar barStyle="light-content" backgroundColor="#070c17" />
+
+     <View style={styles.header}>
+       <Text style={styles.title}>Contacts</Text>
+
+       <TextInput
+         style={styles.searchInput}
+         placeholder="Search contacts..."
+         placeholderTextColor="#dbeaff"
+         value={searchText}
+         onChangeText={setSearchText}
+       />
+     </View>
+
+     <SectionList
+       sections={sections}
+       keyExtractor={(item) => item.id}
+       renderItem={renderItem}
+       renderSectionHeader={renderSectionHeader}
+       stickySectionHeadersEnabled={true}
+       contentContainerStyle={styles.listContent}
+       ListEmptyComponent={<Text style={styles.emptyText}>No contacts found. Check the spelling.</Text>}
+     />
+   </SafeAreaView>
+ );
 }
 
 const styles = StyleSheet.create({
@@ -82,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8fafc',
   },
-  topArea: {
+  header: {
     backgroundColor: '#0f172a',
     paddingHorizontal: 16,
     paddingTop: 10,
@@ -91,7 +116,7 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: 'bold',
     marginBottom: 12,
   },
   searchInput: {
@@ -124,7 +149,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e2e8f0',
   },
-  avatar: { //profile picture
+  profilePicture: { 
     width: 42,
     height: 42,
     borderRadius: 42/2,
@@ -133,7 +158,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 14,
   },
-  avatarText: {
+  profileText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '700',
